@@ -30,7 +30,7 @@ else if(isset($_POST['delete'])){
     $email = $_POST['dEmail'];
     $picToDelete = $_POST['dPic'];
     $datePosted = $_POST['dDate'];
-    $deletePict = "DELETE FROM userimages WHERE picname='$picToDelete'";
+    $deletePict = "DELETE FROM userimages WHERE picname='$picToDelete' AND username='$username' AND email='$email'";
     if(mysqli_query($mysqli, $deletePict)){
         echo "Record successfully deleted";
         $deleted = true;

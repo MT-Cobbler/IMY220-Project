@@ -104,6 +104,7 @@ elseif(isset($_POST['commentBtn'])){
     <meta name="msapplication-TileColor" content="#000000">
     <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
     <meta name="theme-color" content="#000000">
+    <link rel="stylesheet" type="text/css" href="style/style.css">
     <link rel="stylesheet" href="style/homestyle.css" type="text/css">
 
     <style>

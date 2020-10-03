@@ -22,8 +22,7 @@ if(isset($_POST['updateInfoBtn'])){
     $cPword = $_POST['userPass'];
     $cEmail = $_POST['email'];
     $cUsername = $_POST['username'];
-    echo $cFname .  $cLname. $cPword. $cEmail. $cUsername;
-    $updateInfo = mysqli_query($mysqli,"UPDATE usertable SET fname = '".$cFname."', lname = '".$cLname."', pword = '".$cPword."',email = '".$cemail."',username = '".$cUsername."' WHERE email = '$email' AND pword = '$pass'");
+    $updateInfo = mysqli_query($mysqli,"UPDATE usertable SET fname = '".$cFname."', lname = '".$cLname."', pword = '".$cPword."',email = '".$cEmail."',username = '".$cUsername."' WHERE email = '$email' AND pword = '$pass'");
     $updateImageTable = mysqli_query($mysqli, "UPDATE userimages SET email ='".$cEmail."' AND username='".$cUsername."' WHERE email = '$email' AND username = '$cUsername'");
 }
 elseif(isset($_POST['ppBtn'])){
@@ -54,6 +53,16 @@ elseif(isset($_POST['ppBtn'])){
     else{
         
     }
+}
+elseif(isset($_POST['deleteInfo'])){
+    $dFname = $_POST['fname'];
+    $dLname = $_POST['lname'];
+    $dPword = $_POST['userPass'];
+    $dEmail = $_POST['email'];
+    $dUsername = $_POST['username'];
+    $deleteUser = (mysqli_query($mysqli, "DELETE FROM usertable WHERE email = '$dEmail' AND pword = '$dPword' AND fname= '$dFname' AND lname = '$dLname' AND username ='$dUsername'"));
+    $deleteImages = (mysqli_query($mysqli, "DELETE FROM userimages WHERE email = '$dEmail' AND username ='$dUsername'"));
+    $deleteComments = (mysqli_query($mysqli, "DELETE FROM image_comments WHERE username ='$dUsername'"));
 }
 
 ?>
@@ -166,10 +175,16 @@ elseif(isset($_POST['ppBtn'])){
                             <button class="btn" name="updateInfoBtn" type="submit">Update Info</button>
                         </form>
                         <div>
-                            <p>This box is the status update of updating the information</p>
+                           <form action="editProfile.php" method="post">
+                                <input type="hidden" name="email" value="'.$email.'">
+                                <input type="hidden" name="userPass" value="'.$pass.'">
+                                <input type="hidden" name="fname" value="'.$row['fname'].'">
+                                <input type="hidden" name="lname" value="'.$row['lname'].'">
+                                <input type="hidden" name="username" value="'.$row['username'].'">
+                                <button type="submit" class="btn" name="deleteInfo">Delete this acount</button>
+                           </form>
                         </div>
                         <form method="post" action="profile.php">
-                            <p>Change the action of this form to profile.php</p>
                             <input type="hidden" name="email" value="'.$row['email'].'">
                             <input type="hidden" name="userPass" value="'.$row['pword'].'">
                             <button class="btn" name="goBackBtn" type="submit">Go back</button>
@@ -178,7 +193,11 @@ elseif(isset($_POST['ppBtn'])){
                 </div>';
                 }
                 else{
-                    echo "broken1";
+                    echo "<h1>Oops, this account no longer exists</h1><h3>Go back to home and create a new one</h3>
+                    <form method='post' action='index.html'>
+                        <button type='submit' class='btn btn-info' style='background-color: aqua; color: black;'>Go to home</button> 
+                    <form>
+                    ";
                 }
             }
         else{

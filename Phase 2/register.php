@@ -3,10 +3,16 @@
 error_reporting(E_ALL);
 ini_set('error_reporting', E_ALL);
 
-	$server = "localhost";
-	$username = "u17029377";
-	$password = "mzjxkpgl";
-	$database = "dbu17029377";
+//$server = "localhost";
+//$username = "u17029377";
+//$password = "mzjxkpgl";
+//$database = "dbu17029377";
+//$mysqli = mysqli_connect($server, $username, $password, $database);
+
+$server = "localhost";
+$username = "root";
+$password = "";
+$database = "dbu17029377";
 $mysqli = mysqli_connect($server, $username, $password, $database);
 
 if($mysqli){
@@ -17,7 +23,7 @@ if($mysqli){
 	$email = $_POST['email'];
 
 	$query = "INSERT INTO usertable (fname, lname, pword, email, username)	VALUES ('$fname','$lname','$pword','$email', '$uname')";
-
+	
 
 	$res = mysqli_query($mysqli, $query) == TRUE;
 }
@@ -60,7 +66,7 @@ else{
 	<meta name="msapplication-TileColor" content="#000000">
 	<meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
 	<meta name="theme-color" content="#000000">
-	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="stylesheet" type="text/css" href="style/style.css">
 </head>
 <body>
 	<div class="container">
