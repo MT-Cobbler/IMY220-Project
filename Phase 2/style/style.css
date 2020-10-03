@@ -250,8 +250,7 @@ div#showPic {
     }
 }
 
-@media only screen and (max-width:490px;
-) and (max-height: 667px) {
+@media only screen and (max-width:490px) and (max-height: 667px) {
     div.col-12.col-sm-6.offset-sm-3.mx-sm-1.offset-md-3.col-md-5.mx-md-2.col-lg-3.col-xl-3.card.my-2 {
         height: 80vh;
     }

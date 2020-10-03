@@ -15,6 +15,47 @@ $mysqli = mysqli_connect($server, $username, $password, $database);
 $email = isset($_POST["email"]) ? $_POST["email"] : false;
 $pass = isset($_POST["userPass"]) ? $_POST["userPass"] : false;
 
+if(isset($_POST['updateInfoBtn'])){
+
+    $cFname = $_POST['fname'];
+    $cLname = $_POST['lname'];
+    $cPword = $_POST['userPass'];
+    $cEmail = $_POST['email'];
+    $cUsername = $_POST['username'];
+    echo $cFname .  $cLname. $cPword. $cEmail. $cUsername;
+    $updateInfo = mysqli_query($mysqli,"UPDATE usertable SET fname = '".$cFname."', lname = '".$cLname."', pword = '".$cPword."',email = '".$cemail."',username = '".$cUsername."' WHERE email = '$email' AND pword = '$pass'");
+    $updateImageTable = mysqli_query($mysqli, "UPDATE userimages SET email ='".$cEmail."' AND username='".$cUsername."' WHERE email = '$email' AND username = '$cUsername'");
+}
+elseif(isset($_POST['ppBtn'])){
+    $target = "profilePics/" . basename($_FILES['picToUpload']['name']);
+    
+    $image = $_FILES['picToUpload']['name'];//get the file name------
+    $username = $_POST['username'];
+	//--------------We need to do some checks before it cam be uploaded----------------
+    $imageType = strtolower(pathinfo($target, PATHINFO_EXTENSION));
+	if ($imageType === "jpeg" || $imageType === "jpg" || $imageType === "png" || $imageType === "jfif" && $_FILES['picToUpload']['size'] < 1048576) {
+		if ($_FILES['picToUpload']['error'] > 0) {
+			echo "Error";
+		} else {
+				$sql = "UPDATE usertable SET profilepic = '".$image."' WHERE email ='$email' AND pword = '$pass' AND username ='$username'";
+				if ($mysqli->query($sql) === TRUE) {
+
+					if (move_uploaded_file($_FILES['picToUpload']['tmp_name'], $target)) {
+						
+					} else {
+                        echo "here 1" ;
+					}
+                }
+                else{
+                    echo "here 1" ;
+                }
+		}
+    }
+    else{
+        
+    }
+}
+
 ?>
 
 <html>
@@ -50,7 +91,8 @@ $pass = isset($_POST["userPass"]) ? $_POST["userPass"] : false;
     <meta name="msapplication-TileColor" content="#000000">
     <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
     <meta name="theme-color" content="#000000">
-    <link rel="stylesheet" type="text/css" href="style.css">
+<!--    <link rel="stylesheet" type="text/css" href="style.css">-->
+<link href="style/editprofileInfo.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>
@@ -61,100 +103,79 @@ $pass = isset($_POST["userPass"]) ? $_POST["userPass"] : false;
                 $query = "SELECT * FROM usertable WHERE email = '$email' AND pword = '$pass'";
 		        $res = $mysqli->query($query);
                 if ($row = mysqli_fetch_array($res)) {
-                    echo '
-						<nav>	
-							<ul class="row pb-2" id="nav">
-								<div class="col-12 col-sm-12 col-md-6">
-									<span> <img src="media/logo6.png" width="80" height="80" alt="logo"> </span>
-									<span class="display-4"> Hello: ' . $row['username'] . '</span>
-								</div>
-								<div class="col-12 col-sm-12 col-md-6">
-										
-									<li><a href="#about">About</a></li>
-									<li><a href="#contact">Contact</a></li>
-									<li><a href="profile.php?user_Id=' . $email . '">Profile</a></li>
-									<li><a class="active" href="#home">Home</a></li>
-								</div>
-								
-								
-							</ul>
-							<div class="row" style="background-color:#944170">
-								<button class="col-md-2 offset-md-3 col-12  my-2 btn btn-light">Your Feed</button>	
-								<button class="col-md-2 offset-md-2 col-12 my-2 btn btn-dark">Global Feed</button>
-								<a class="col-3 offset-md-0 offset-4 mt-2" href="index.html">
-									<button class="btn btn-info">Log Out</button>
-								</a>	
-							
-							</div>
-						</nav>
-						';
-                    echo '<div class="container">
-            <div class="row">
-                <div class="col-12 col-sm-12 col-md-6">
-                    <span> <img src="media/logo6.png" width="80" height="80" alt="logo"> </span>
-                    <span class="display-4"> Hello: ' . $row['username'] . '</span>
-                </div>
-                <div class="col-12 col-sm-12 col-md-6">
-                    <h1>Edit your profile</h1>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-2">
-                    <img src="profilePics/logo6.png">
-                </div>
-                <div class="col-10">
-                    <input type="text" class="form-control">
-                    <p>Change your profile picture</p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-2">
-                    <h3>Name</h3>
-                </div>
-                <div class="col-10">
-                    <input type="text" class="form-control">
-                    <p>Change your name</p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-2">
-                    <h3>Surname</h3>
-                </div>
-                <div class="col-10">
-                    <input type="text" class="form-control">
-                    <p>Change your surname</p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-2">
-                    <h3>Email</h3>
-                </div>
-                <div class="col-10">
-                    <input type="text" class="form-control">
-                    <p>Change your email</p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-2">
-                    <h3>Password</h3>
-                </div>
-                <div class="col-10">
-                    <input type="text" class="form-control">
-                    <p>Change your password</p>
-                </div>
-            </div>
-            <form method="post" action="editprofile.php">
-                <input type="text" value="'.$email.'" name="email">
-                <input type="text" value="'.$pass.'" name="userPass">
-                <button class="btn btn-dark" type="submit">Save</button>
-            </form>
-            <form method="post" action="profile.php">
-                <input type="hidden" value="">
-                <input type="hidden" value="">
-                <button class="btn btn-dark" type="submit">Back</button>
-            </form>
-        </div>';
+						
+                    echo ' <div class="container">
+                    <h3 style="text-align: center">Select a box to change your information</h3>
+                    <div id="topBox">
+                        <!--this ,ust be split into two columns-->
+                        <div class="row">
+                            <div class="col-md-4 col-sm-12" id="profilePicBox">
+                                <img src="profilePics/'.$row['profilepic'].'" alt="profilePic">
+                            </div>
+                            <div class="col-md-8 col-sm-12" id="changePic">
+                                <h2>'.$row['username'].'</h2>
+                                <h3>'.$row['fname'].''." ".''.$row['lname'].'</h3>
+                                <form method="post" action="editprofile.php" enctype="multipart/form-data">
+                                    <input type="hidden" name="email" value="'.$email.'">
+                                    <input type="hidden" name="userPass" value="'.$pass.'">
+                                    <input type="hidden" name="username" value="'.$row['username'].'">
+                                    <input type="file" name="picToUpload" id="picToUpload">
+                                    <button type="submit" name="ppBtn" class="btn">Change Profile Picture</button>  
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="bottomBox">
+                        <form action="editProfile.php" method="post">
+                            <table class="row">
+                                <tr class="col-12">
+                                    <td>
+                                        <h3>Name:</h3>
+                                    </td>
+                                    <td>
+                                        <input type="text" name="fname" value="'.$row['fname'].'" class="form-control">
+                                    </td>
+                                    <td class="moveRight">
+                                        <h3>Surname:</h3>
+                                    </td>
+                                    <td>
+                                        <input type="text" name="lname" value="'.$row['lname'].'" class="form-control">
+                                    </td>
+                                </tr>
+                                <tr class="col-12">
+                                    <td>
+                                        <h3>Password:</h3>
+                                    </td>
+                                    <td> <input type="text" name="userPass" value="'.$row['pword'].'" class="form-control"></td>
+                                    <td class="moveRight">
+                                        <h3>Email:</h3>
+                                    </td>
+                                    <td>
+                                        <input type="email" name="email" value="'.$row['email'].'" class="form-control">
+                                    </td>
+                                </tr>
+                                <tr class="col-12">
+                                    <td>
+                                        <h3>Username:</h3>
+                                    </td>
+                                    <td>
+                                        <input type="text" name="username" value="'.$row['username'].'" class="form-control">
+                                    </td>
+                                </tr>
+                            </table>
+                            <button class="btn" name="updateInfoBtn" type="submit">Update Info</button>
+                        </form>
+                        <div>
+                            <p>This box is the status update of updating the information</p>
+                        </div>
+                        <form method="post" action="profile.php">
+                            <p>Change the action of this form to profile.php</p>
+                            <input type="hidden" name="email" value="'.$row['email'].'">
+                            <input type="hidden" name="userPass" value="'.$row['pword'].'">
+                            <button class="btn" name="goBackBtn" type="submit">Go back</button>
+                        </form>
+                    </div>
+                </div>';
                 }
                 else{
                     echo "broken1";

@@ -1,97 +1,79 @@
 <?php
-	
-//	$server = "localhost";
-//	$username = "u17029377";
-//	$password = "mzjxkpgl";
-//	$database = "dbu17029377";
-//	$mysqli = mysqli_connect($server, $username, $password, $database);
+
+//$server = "localhost";
+//$username = "u17029377";
+//$password = "mzjxkpgl";
+//$database = "dbu17029377";
+//$mysqli = mysqli_connect($server, $username, $password, $database);
 
 $server = "localhost";
 $username = "root";
 $password = "";
 $database = "dbu17029377";
 $mysqli = mysqli_connect($server, $username, $password, $database);
-	
-$email = isset($_GET['user_Id']) ? $_GET['user_Id'] : false;
-$pass = isset($_GET['user_P']) ? $_GET['user_P'] : false;
 
-if (isset($_POST['submit'])) {
-	
+$email = isset($_POST["email"]) ? $_POST["email"] : false;
+$pass = isset($_POST["userPass"]) ? $_POST["userPass"] : false;
+
+
+if (isset($_POST['upload'])) {
 	/*----------------Upload multiple at a time------------*/
+
 	$targetFile = "gallery/";
+
 	$uploadFile = $_FILES['picToUpload'];
 	$numFiles = count($uploadFile['name']);
 	$userID = $email;
-	$imageName = $_POST['iName'];
+	//$imageName = $_POST['iName'];
 	$imageD = $_POST['iDescription'];
 	$imageHash = $_POST['iHash'];
+	$uName = $_POST['UserName'];
 
 	for ($i = 0; $i < $numFiles; $i++) {
+
 		$target = $targetFile . $uploadFile['name'][$i];
 		$imageType = strtolower(pathinfo($target, PATHINFO_EXTENSION));
 
 		$image = $uploadFile['name'][$i];
 
-		if ($imageType === "jpeg" || $imageType === "jpg" || $imageType === "png") {
-
+		if ($imageType === "jpeg" || $imageType === "jpg" || $imageType === "png" || $imageType === "jfif") {
+			
 			if ($uploadFile['error'][$i] > 0) {
 			} else {
-
-				// if (!file_exists($target)) {
-				$sql = "INSERT INTO userimages (email, filename, imagename, hashtag, i_description) VALUES ('$userID','$image', '$imageName', '$imageHash', '$imageD')";
-				if ($mysqli->query($sql) === TRUE) {
-
-					if (move_uploaded_file($uploadFile['tmp_name'][$i], $target)) {
-					} else {
-					}
+				
+				if (move_uploaded_file($uploadFile['tmp_name'][$i], $target)) {
+				} else {
+					echo "could not upload";
 				}
-				// }
+				$uploadImage = "INSERT INTO userimages(email, picname ,hashtag, i_description, username) VALUES ('$userID','$image','$imageHash','$imageD', '$uName')";
+				// $imageUploading = "INSERT INTO userimages (email, fname, hashtag, i_description, username) VALUES ('$userID','$image', '$imageHash', '$imageD', '$userName')";
+				if ($mysqli->query($uploadImage) === TRUE) {
+					
+				} else {
+					//echo $image;
+				}
 			}
 		}
 	}
-
-
 	//-----------------Upload multiple at a time------------*/
+}
+else if(isset($_POST['commentBtn'])){
+    $commented = $_POST['picComment'];
+    $username = $_POST['uName'];
+    $picName = $_POST['picName'];
 
-
+    $uploadComment = "INSERT INTO image_comments (username, picname, comment) VALUES('$username','$picName')";
+    if($mysqli->query($uploadComment) === TRUE){
+    }
 }
 
-
-if(isset($_POST['upload'])){
-	$target = "gallery/" . basename($_FILES['profile']['name']);
-
-		$image = $_FILES['profile']['name'];//get the file name------
-		$email = $_GET['user_Id'];
-		
-
-
-		//--------------We need to do some checks before it cam be uploaded----------------
-		$imageType = strtolower(pathinfo($target, PATHINFO_EXTENSION));
-		if ($imageType === "jpeg" || $imageType === "jpg" && $_FILES['profile']['size'] < 1048576) {
-			if ($_FILES['profilepic']['error'] > 0) {
-				echo "Error";
-			} else {
-				if (!file_exists($target)) {
-					$sql = "INSERT INTO userimages (profilepic) VALUES ('$image') WHERE email ='$email'";
-					if ($mysqli->query($sql) === TRUE) {
-
-						if (move_uploaded_file($_FILES['profile']['tmp_name'], $target)) {
-							
-						} else {
-						}
-					}
-				} else {
-				}
-			}
-		}
-	// if email and/or pass POST values are set, set the variables to those values, otherwise make them false
-	}
+// if email and/or pass POST values are set, set the variables to those values, otherwise make them false
 ?>
 <!DOCTYPE html>
 <html>
 
 <head>
-    <title>P. Exhibit - Profile</title>
+<title>P. Exhibit - Profile</title>
     <meta charset="utf-8">
     <meta name="author" content="Matthew Schoeman">
     <meta name="viewport" content="width=device-width,initial-1">
@@ -121,44 +103,233 @@ if(isset($_POST['upload'])){
     <meta name="msapplication-TileColor" content="#000000">
     <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
     <meta name="theme-color" content="#000000">
-    <link rel="stylesheet" type="text/css" href="style.css">
-    <link rel="stylesheet" type="text/css" href="profilePic.css">
+    <link href="style/profile.css" rel="stylesheet" type="text/css">
 </head>
 
 <body id="homeContainer">
 
     <?php
 
-		if($email){
+		if($email && $pass){
 			$getID = "SELECT email FROM usertable WHERE email = '$email'";
 			$result = $mysqli->query($getID);
 			$sResult = mysqli_fetch_array($result);
 			$userID = $sResult['email'];
 			
-			$query = "SELECT * FROM usertable WHERE email = '$email'";
+			$query = "SELECT * FROM usertable WHERE email = '$email' AND pword = '$pass'";
 			$res = $mysqli->query($query);
 			if($row = mysqli_fetch_array($res)){
-				echo '
-					<nav>	
-						<ul class="row pb-2" id="nav">
-							<div class="col-12 col-sm-12 col-md-6">
-								<span> <img src="media/logo6.png" width="80" height="80" alt="logo"> </span>
-								<span class="display-4"> Hello: '.$row['username'].'</span>
-							</div>
-							<div class="col-12 col-sm-12 col-md-6">	
-								<li><a href="#about">About</a></li>
-								<li><a href="#contact">Contact</a></li>
-								<li><a href="profile.php">Profile</a></li>
-							  	<li><a class="active" href="home.php">Home</a></li>
-							</div>
-						</ul>
-					</nav>
+                echo '
+                <div id="navigation">
+                        <div class="container">
+                        <ul>
+                            <li><form action="home.php" method="post">
+                                <input type="hidden" value="'.$email.'" name="email">
+                                <input type="hidden" value="'.$pass.'" name="userPass">
+                                <button type="submit">Home</button>
+                            </form></li>
+                            <a href="#">
+                                <li class="active">Profile</li>
+                            </a>
+                            <a href="index.html">
+                                <li>Log Out</li>
+                            </a>
+                            <a>
+                                <li>'. $row['username'].'</li>
+                            </a>
+                        </ul>
+                    </div>
+            </div>
+            <br>
+            <br>
+            <div class="container" id="UploadImage">
+                <form action="profile.php" method="post" enctype="multipart/form-data">
+        
+                    <label>Choose Image</label>
+                    <input type="file" name="picToUpload[]" id="picToUpload" multiple="multiple" required="required">
+        
+                    <label>Hashtag</label>
+                    <input type="text" name="iHash" placeholder="#sunset" required="required">
+        
+                    <label>Description</label>
+                    <input type=" text" name="iDescription" placeholder="Relaxing time watching the sunset" required="required">
+        
+                    <input type="hidden" name="UserName" value="'.$row['username'].'">
+                    <input type="hidden" name="email" value="'.$email.'">
+                    <input type="hidden" name="userPass" value="'.$pass.'">
+        
+                    <button type="submit" class="btn" style="border:1px solid pink;transition: all 0.2s" name="upload">Upload Image</button>
+                </form>
+                <!--Uploading images-->
+        
+            </div>
+            <br>
+            <div class="container">
+                <div id="statusBox">
+                    <div id="statusBox_Content">
+                        <div id="profileImage" class="innerContents">
+                            <img src="profilePics/'.$row['profilepic'].'" alt="profileImage">
+                        </div>
+                        <div id="info" class="innerContents">
+                            <div id="upperInfo">
+                                <h3>'.$row['username'].'</h3>
+                                <form method="post" action="editProfile.php">
+                                    <span style="color:#333;">'.$email.'       ->Click on the right to edit info </span>
+                                    <input type="hidden" name="email" value="'.$email.'">
+                                    <input type="hidden" name="userPass" value="'.$pass.'">
+                                    <button type="submit"  style="border:1px solid pink;transition: all 0.2s; margin-bottom: 1%;" name="upload" class="btn" id="EditBtn">Edit profile information</button>
+                                </form>
+                            </div>
+                            <div id="lowerInfo">
+                                <button class="btn"># Posts</button>
+                                <button class="btn">Followers</button>
+                                <button class="btn">Following</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid">
+                <div id="FeedsBox">
+                    <div id="singlePosts" class="postsBoxes">
+                        <!--Posts go here in reverse Chronological order-->
+                        <!--Posts will have to have the function to edit-->
+                        <h1>Your Posts</h1>';
+
+                $query = "SELECT * FROM userimages  WHERE email = '$userID' ORDER BY date DESC";
+                
+				$result = $mysqli->query($query);
+                if($result->num_rows > 0){
+                    while($rowTwo = $result->fetch_assoc()){
+                        echo '     <div class="PostCard">
+                            <div class="postCard_Header">
+                                <div class="postCard_Header_PP" style="margin-right:25%;margin-left:5%">
+                                    <i class="fas fa-edit" ></i>
+                                </div>
+                                <div class="postcard_Header_PP">
+                                    <form method="post" action="editPost.php">
+                                        <input type="hidden" name="email" value="'.$email.'">
+                                        <input type="hidden" name="userPass" value="'.$pass.'">
+                                        <input type="hidden" name="picname" value="'.$rowTwo['picname'].'">
+                                        <button type="submit" class="editButton">Edit</button>
+                                    </form>
+                                </div>
+        
+                            </div>
+                            <div class="postCard_Image">
+                                <img src="gallery/' . $rowTwo['picname'] . '" alt="postImage">
+                                
+                            </div>
+                            <div class="postCard_Footer">
+                                <div id="Hashtage">
+                                    <form action="postPage.php" method="post">
+                                        <input type="hidden" name="email" value="'.$email.'">
+                                        <input type="hidden" name="userPass" value="'.$pass.'">
+                                        <input type="hidden" name="hashtag" value="'.$rowTwo['hashtag'].'">
+                                        <button class="editButton" type="submit">' . $rowTwo['hashtag'] . '</button>
+                                    </form>
+                                </div>
+                                <div id="comments">
+                                    <span>' . $rowTwo['i_description'] . '</span>
+                                    <div id="showComments">';
+                                    $picname = $rowTwo['picname'];
+                                    $username = $row['username'];
+                                    $comments = "SELECT * FROM image_comments WHERE username = '$username' AND picname = '$picname'  ORDER BY time DESC";
+                                    $commentResults = $mysqli->query($comments);
+                                    if($commentResults->num_rows > 0){
+                                        while($numCom = $commentResults->fetch_assoc()){
+                                            echo '
+                                                <p>"'.$numCom['comment'].'" "'.$numCom['time'].'"</p>
+                                            ';
+                                        }
+                                    }
+                                 echo '   </div>
+                                </div>
+                            </div>
+                        </div>';
+                    }
+                }
+            echo '
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                    </div>
+                    <div id="albums" class="postsBoxes">
+                <h1>Your Albums</h1>
+
+                <div class="album">
+                    <h3>Album 1</h3>
+                    <button class="btn">Edit Album</button>
+                </div>
+                <div class="album">
+                    <h3>Album 1</h3>
+                    <button class="btn">Edit Album</button>
+                </div>
+                <div class="album">
+                    <h3>Album 1</h3>
+                    <button class="btn">Edit Album</button>
+                </div>
+                <div class="album">
+                    <h3>Album 1</h3>
+                    <button class="btn">Edit Album</button>
+                </div>
+                <div class="album">
+                    <h3>Album 1</h3>
+                    <button class="btn">Edit Album</button>
+                </div>
+                <div class="album">
+                    <h3>Album 1</h3>
+                    <button class="btn">Edit Album</button>
+                </div>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+            </div>
+                </div>
+            </div>
 					';	
 				}	
-		}		
+        }
+        else{
+            echo "hello";
+        }		
 	?>
 
-    <div class="container-fluid">
+    <!-- <div class="container-fluid">
         <div class="container" id="topBar">
             <div class="row">
                 <div class="col-4" id="topBar_Left">
@@ -197,7 +368,7 @@ if(isset($_POST['upload'])){
             <div class="row">
                 <div class="col-6 border">
                     <!--Posts-->
-                    <div class="card border">
+                   <!-- <div class="card border">
 
                         <div class="card-title">hello
                         </div>
@@ -213,7 +384,7 @@ if(isset($_POST['upload'])){
                 </div>
                 <div class="col-6 border">
                     <!--Albums-->
-                    <div class="card border">
+                   <!-- <div class="card border">
 
                         <div class="card-title">hello
                         </div>
@@ -229,7 +400,7 @@ if(isset($_POST['upload'])){
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
 </body>
 

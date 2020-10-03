@@ -1,0 +1,317 @@
+html,
+body {
+    overflow-y: hidden;
+    /*    background-color:#a8dadc;*/
+    background-color: #caf0f8;
+    color: #333;
+}
+
+ul {
+    list-style-type: none;
+}
+
+ul li {
+    float: left;
+}
+
+ul a li {
+    text-align: center;
+    margin: auto 8.5%;
+}
+
+li:nth-child(0) {
+    margin-left: 25%;
+}
+
+li form button {
+    text-align: center;
+    margin-left: 4%;
+    border: none;
+    color: white;
+    background-color: rgba(255, 255, 255, .0);
+    transition: 150ms;
+}
+
+li form button:hover {
+    color: #9e0059;
+}
+
+.active {
+    text-decoration: line-through;
+}
+
+#statusBox {
+    height: 20vh;
+}
+
+#EditBtn:hover {
+    color: white;
+    background-color: #9e0059;
+}
+
+.editButton {
+    border: none;
+    background-color: rgba(255, 255, 255, .0);
+    border-bottom: 1px solid white;
+    color: white;
+    transition: 150ms;
+}
+
+.editButton:hover {
+    background-color: white;
+    color: black;
+}
+
+.innerContents {
+    float: left;
+    height: 20vh;
+}
+
+#profileImage {
+    width: 25%;
+    background-color: 1a535c;
+}
+
+#profileImage img {
+    display: block;
+    margin: 0 auto;
+    height: 100%;
+}
+
+
+/*The posts will display here*/
+
+#FeedsBox {
+    height: 90vh;
+}
+
+.postsBoxes {
+    width: 50%;
+    float: left;
+    height: 100%;
+    overflow-y: scroll;
+    text-align: center;
+}
+
+.PostCard {
+    width: 40%;
+    margin-left: 4%;
+    margin-top: 3%;
+    height: 400px;
+    display: inline-block;
+    text-align: left;
+    background-color: #9e0059;
+    color: white;
+    box-shadow: 0px 0px 15px #333;
+    transition: 200ms;
+    overflow-y: none;
+}
+
+.PostCard:hover {
+    box-shadow: 0px 0px 0px #333;
+}
+
+.postCard_Header {
+    height: 11%;
+    padding: 2% 0;
+}
+
+.postCard_Header_PP {
+    float: left;
+    height: 100%;
+}
+
+span {
+    color: #eee;
+}
+
+.postCard_Header_PP:nth-child(1) {
+    width: 10%;
+}
+
+div.postCard_Header_PP img {
+    height: 100%;
+    border-radius: 50%;
+}
+
+.postCard_Image {
+    padding: 5%;
+    height: 50%;
+    background-color: white;
+}
+
+div.postCard_Footer {
+    height: 25%;
+    padding-left: 3%;
+    background-color: #9e0059;
+    overflow-y: scroll;
+}
+
+div#showComment {
+    height: 100%;
+    overflow-y: scroll;
+}
+
+.postCard_Image img {
+    height: 100%;
+    width: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+#Comments {
+    width: 100%;
+    height: 10%;
+    overflow-y: none;
+}
+
+.album {
+    width: 40%;
+    margin-left: 7.5%;
+    margin-top: 3%;
+    height: 300px;
+    display: inline-block;
+    /*    border: 1px solid #eee;*/
+    box-shadow: 0px 0px 15px #333;
+    text-align: center;
+    background-color: #9e0059;
+    transition: 200ms;
+    color: #eee;
+}
+
+.album button {
+    color: white;
+}
+
+.album button:hover {
+    background-color: #eee;
+}
+
+.album:hover {
+    box-shadow: 0px 0px 0px #333;
+}
+
+.album h3 {
+    height: 25%;
+    margin-top: 25%;
+}
+
+div#lowerInfo>button {
+    margin: 0 5%;
+    border: none;
+    border-bottom: 1px solid black;
+    background-color: white;
+    box-shadow: 0 0 6px #333;
+}
+
+div#lowerInfo>button:hover {
+    box-shadow: 0 5px 4px #333;
+}
+
+#singlePosts {
+    background-color: #48cae4;
+    transition: 300ms;
+}
+
+#singlePosts:hover {
+    background-color: #0077b6;
+}
+
+#singlePosts h1 {
+    color: #ffffff;
+}
+
+#albums {
+    background-color: #48cae4;
+    transition: 300ms;
+}
+
+#albums:hover {
+    background-color: #0077b6;
+}
+
+#albums h1 {
+    color: #ffffff
+}
+
+.container {
+    margin-bottom: 1%;
+}
+
+#navigation {
+    width: 100%;
+    border: 1px solid black;
+    height: 8vh;
+    background-color: #03045e;
+    color: white;
+    margin-bottom: 1%;
+}
+
+#navigation .container ul a {
+    color: white;
+    transition: 100ms;
+}
+
+#navigation .container ul a:hover {
+    color: #9e0059;
+}
+
+#UploadImage form input {
+    padding: 0.5%;
+    background-color: rgba(255, 255, 255, .0);
+    border: none;
+    border-bottom: 1px solid black;
+    transition: 200ms;
+}
+
+#UploadImage form input:hover {
+    padding: 0.5%;
+    background-color: rgba(255, 255, 255, .8);
+    border: none;
+    border-bottom: 1px solid black;
+}
+
+#UploadImage form button:hover {
+    color: white;
+    background-color: #9e0059;
+}
+
+@media only screen and (max-width: 560px) {
+    html {
+        overflow-y: auto;
+    }
+    #navigation {
+        height: 10vh;
+    }
+    #UploadImage form label {
+        width: 40%;
+    }
+    #UploadImage form input {
+        margin-right: 20%;
+    }
+    #singlePosts {
+        width: 90%;
+        overflow: auto;
+        ;
+    }
+    #profileImage {
+        height: 40px;
+    }
+    #profileImage img {
+        height: 100%;
+    }
+    .PostCard {
+        width: 90%
+    }
+    #FeedsBox {
+        height: 100%;
+    }
+    #albums {
+        width: 5%;
+        margin-left: 5%;
+        overflow-x: hidden;
+    }
+    #albums:hover {
+        width: 40%;
+    }
+}

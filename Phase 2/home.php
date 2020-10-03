@@ -27,7 +27,7 @@ if (isset($_POST['upload'])) {
 	//$imageName = $_POST['iName'];
 	$imageD = $_POST['iDescription'];
 	$imageHash = $_POST['iHash'];
-	$userName = $_POST['username'];
+	$uName = $_POST['UserName'];
 
 	for ($i = 0; $i < $numFiles; $i++) {
 
@@ -45,7 +45,7 @@ if (isset($_POST['upload'])) {
 				} else {
 					echo "could not upload";
 				}
-				$uploadImage = "INSERT INTO userimages(email, picname ,hashtag, i_description, username) VALUES ('$userID','$image','$imageHash','$imageD', '$username')";
+				$uploadImage = "INSERT INTO userimages(email, picname ,hashtag, i_description, username) VALUES ('$userID','$image','$imageHash','$imageD', '$uName')";
 				// $imageUploading = "INSERT INTO userimages (email, fname, hashtag, i_description, username) VALUES ('$userID','$image', '$imageHash', '$imageD', '$userName')";
 				if ($mysqli->query($uploadImage) === TRUE) {
 					
@@ -57,11 +57,20 @@ if (isset($_POST['upload'])) {
 	}
 	//-----------------Upload multiple at a time------------*/
 }
+elseif(isset($_POST['commentBtn'])){
+    $commented = $_POST['picComment'];
+    $username = $_POST['uName'];
+    $picName = $_POST['picname'];
+
+    $uploadComment = "INSERT INTO image_comments (username, picname, comment) VALUES('$username','$picName', '$commented')";
+    if($mysqli->query($uploadComment) === TRUE){
+    }
+}
 
 // if email and/or pass POST values are set, set the variables to those values, otherwise make them false
 ?>
-
 <!DOCTYPE html>
+
 <html>
 
 <head>
@@ -95,127 +104,135 @@ if (isset($_POST['upload'])) {
     <meta name="msapplication-TileColor" content="#000000">
     <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
     <meta name="theme-color" content="#000000">
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" href="style/homestyle.css" type="text/css">
+
+    <style>
+
+
+    </style>
 </head>
 
-<body id="homeContainer">
-
+<body>
     <?php
-	if ($email && $pass) {
+        if($email && $pass){
+            session_start();
+            $_SESSION['email'] = $email;
 
-		session_start();
-		$_SESSION['email'] = $email;
-		
-		$getID = "SELECT email FROM usertable WHERE email = '$email' AND pword = '$pass'";
-		$result = $mysqli->query($getID);
-		$sResult = mysqli_fetch_array($result);
-		$userID = $sResult['email'];
+            $getID = "SELECT email FROM usertable WHERE email = '$email' AND pword = '$pass'";
+            $result = $mysqli->query($getID);
+            $sResult = mysqli_fetch_array($result);
+            $userID = $sResult['email'];
 
-		$query = "SELECT * FROM usertable WHERE email = '$email' AND pword = '$pass'";
-		$res = $mysqli->query($query);
+            $query = "SELECT * FROM usertable WHERE email = '$email' AND pword = '$pass'";
+            $res = $mysqli->query($query);
+            
+            if($row = mysqli_fetch_array($res)){
+                echo '
+                <div id="navigation">
+                        <div class="container">
+                        <ul>
+                        <a href="#">
+                                <li class="active">Home</li>
+                            </a>
+                            <li><form action="profile.php" method="post">
+                                <input type="hidden" value="'.$email.'" name="email">
+                                <input type="hidden" value="'.$pass.'" name="userPass">
+                                <button type="submit">Profile</button>
+                            </form></li>
+                            
+                            <a href="index.html">
+                                <li>Log Out</li>
+                            </a>
+                            <a>
+                                <li>'. $row['username'].'</li>
+                            </a>
+                        </ul>
+                    </div>
+            </div>
+                        <br>
+                        <br>
 
-		if ($row = mysqli_fetch_array($res)) {
-				echo '
-						<nav>	
-							<ul class="row pb-2" id="nav">
-								<div class="col-12 col-sm-12 col-md-6">
-									<span> <img src="media/logo6.png" width="80" height="80" alt="logo"> </span>
-									<span class="display-4"> Hello: ' . $row['username'] . '</span>
-								</div>
-								<div class="col-12 col-sm-12 col-md-6">
+                        <div class="container-fluid">
+                            <!--We need to have two divs- 1 for user - 2 for everyone -->
+                            <div class="feedDiv">
+
+                                <div id="UploadImage" class="container">
+									<form action="home.php" method="post" enctype="multipart/form-data">
+									
+                                        <label>Choose Image</label>
+										<input type="file" name="picToUpload[]" id="picToUpload" multiple="multiple" required="required">
 										
-									<li><a href="#about">About</a></li>
-									<li><a href="#contact">Contact</a></li>
-									<li><a href="profile.php?user_Id=' . $email . '&user_P='.$pass.'">Profile</a></li>
-									<li><a class="active" href="#home">Home</a></li>
-								</div>
-								
-								
-							</ul>
-							<div class="row" style="background-color:#944170">
-								<button class="col-md-2 offset-md-3 col-12  my-2 btn btn-light">Your Feed</button>	
-								<button class="col-md-2 offset-md-2 col-12 my-2 btn btn-dark">Global Feed</button>
-								<a class="col-3 offset-md-0 offset-4 mt-2" href="index.html">
-									<button class="btn btn-info">Log Out</button>
-								</a>	
-							
-							</div>
-						</nav>
-						';
+                                        <label>Hashtag</label>
+										<input type="text" name="iHash" placeholder="#sunset" required="required"">
+										
+                                        <label>Description</label>
+										<input type="text" name="iDescription" placeholder="Relaxing time watching the sunset" required="required">
+										
+										<input type="hidden" name="UserName" value="' . $row['username'] . '"/>
+										<input type="hidden" name="email" value="' . $email . '"/>
+										<input type="hidden" name="userPass" value="' . $pass . '"/>
 
+                                        <button type="submit" class="btn" style="border:1px solid pink;" name="upload" >Upload Image</button>
+                                    </form>
+                                    <!--Uploading images-->
 
-
-				echo '
-						<div class="container-fluid">
-							<div class="row">
-								<div class="col-md-3 col-12" style="background-color:#944170">
-									<div class="card" >
-										<form action="home.php" method="POST" enctype="multipart/form-data" class="container" id="imageUpload" style="background-color:#944170; border:none;">
-											<div class="card-header">
-												Upload a Photo
-											</div>
-											<div class="form-group">
-												<label>Choose your photo</label><br/>
-												<input type="file" class="form-control col-12" name=" picToUpload[]" id="picToUpload" multiple="multiple" required="required"/>
-											</div>
-											<div class="form-group">
-												<label>Photo Description</label><br/>
-												<input type="text" class="form-control col-12" name="iDescription" placeholder="Relaxing time watching the sunset" required="required">
-											</div>
-											<div class="form-group">
-												<label>Choose your hastags</label><br/>
-												<input type="text" class="form-control col-12" name="iHash" placeholder="#sunset" required="required">
-											</div>
-											<input type="hidden" name="username" value="' . $row['username'] . '"/>
-											<input type="hidden" name="email" value="' . $email . '"/>
-											<input type="hidden" name="userPass" value="' . $pass . '"/>
-											
-											<button type="submit" class="btn btn-light" name="upload">Upload Image</button>
-										</form>
-									</div>
-								</div>';
-
-
-				echo '
-								<div class="col ml-1" id="showPic">
-									<div class="row imageGallery">';
-
-				$query = "SELECT * FROM userimages  WHERE email = '$userID' ORDER BY date DESC";
-
+                                </div>
+                                <div id="feedButtons">
+                                    <button class="btn selectedButton">Your Feed</button>
+                                    <button class="btn">Global Feed</button>
+                                </div>
+                                <div id="personalFeed" class="feeds">
+                                    <!--We need to create the cards-->';
+                
+                $query = "SELECT * FROM userimages  WHERE email = '$userID' ORDER BY date DESC";
+                
 				$result = $mysqli->query($query);
-				if ($result->num_rows > 0) {
-					// output data of each row
-					while ($rowTwo = $result->fetch_assoc()) {
-						echo '		<div class="col-12 col-sm-6 offset-sm-3 mx-sm-1 offset-md-3 col-md-5 mx-md-2 col-lg-3 col-xl-3 card my-2" style="box-shadow: 5px 5px 15px black;height:45vh">
-											<div class="uploaded" style="height: 100%">
-												<div class="card-title" style="height: 10%">
-													<div class="card-header">' . $row['username'] . '</div>
-												</div>
-												<div class="card-img-top imageBackground" style="height: 60%; width:100%">
-													<img class="card-img" src="gallery/' . $rowTwo['picname'] . '" alt="Card image cap" style="width: 100%; height:100%">
-												</div>
-												<div class="card-body py-0" style="height: 20%">
-												<div class="row card-text">
-													<div class="col-11 text-left">
-														<h6 class="card-text">' . $rowTwo['hashtag'] . '</h6>
-													</div>
-													<div>
-														<i class="far fa-heart"></i>
-													</div>
-												</div>
-												<div class="row">
-													
-													<div class="text-muted">
-													<p>' . $rowTwo['i_description'] . '</p><p>' . $rowTwo['date'] . '</p>
-														
-													</div>
-														
-												</div>
-												</div>
-											</div>
-										</div>';
-					}
-				} else {
+                if($result->num_rows > 0){
+                    while($rowTwo = $result->fetch_assoc()){
+                         echo '
+                                    <div class="PostCard">
+                                        <div class="postCard_Header">
+                                            <div class="postCard_Header_PP" >
+                                                <img src="profilePics/'.$row['profilepic'].'" alt="profilePicture" style="background-color:white">
+                                            </div>
+                                            <div class="postcard_Header_PP">
+                                                <!--<a href="profile.php?email=' . $email . '& userPass='.$pass.'"><span>' . $rowTwo['username'] . '</span></a>-->
+                                                <form method="post" action="profile.php">
+                                        <input type="hidden" name="email" value="'.$email.'">
+                                        <input type="hidden" name="userPass" value="'.$pass.'">
+                                        <input type="hidden" name="picname" value="'.$rowTwo['picname'].'">
+                                        <button type="submit" id="editButton">' . $rowTwo['username'] . '</button>
+                                    </form>
+                                            </div>
+
+                                        </div>
+                                        <div class="postCard_Image">
+                                            <img src="gallery/' . $rowTwo['picname'] . '" alt="postImage">
+                                        </div>
+                                        <div class="postCard_Footer" style="height: 25%; padding-left: 3%;background-color: #9e0059;">
+                                            <div id="Hashtage">
+                                                <form action="postPage.php" method="post">
+                                                    <input type="hidden" name="email" value="'.$email.'">
+                                                    <input type="hidden" name="userPass" value="'.$pass.'">
+                                                    <input type="hidden" name="hashtag" value="'.$rowTwo['hashtag'].'">
+                                                    <button class="editButton" type="submit">' . $rowTwo['hashtag'] . '</button>
+                                                </form>
+                                                <p>' . $rowTwo['i_description'] . '</p>
+                                            </div>
+                                            <div id="comments">
+                                               <form method="post" action="home.php">
+                                                    <input type="hidden" name="email" value="'.$email.'">
+                                                    <input type="hidden" name="userPass" value="'.$pass.'">
+                                                    <input type="hidden" name="picture" value="'.$rowTwo['picname'].'">
+                                                    <input type="text" name="picComment">
+                                                    <button type="submit" name="commentBtn">Comment</button>
+                                               </form>
+                                               
+                                            </div>
+                                        </div>
+                                    </div>';
+                    }
+                }else{
 					echo '
 									<div class="container" style="text-align:center; color:white; margin-top:5%">
 										<h1>Nothing to show</h1>
@@ -223,14 +240,51 @@ if (isset($_POST['upload'])) {
 									</div>
 									';
 				}
-				echo '</div>
-									<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-								</div>
-							</div>
-						</div>';
-			 
-		} else {
-			echo "
+                echo '
+                                    <br>
+                                    <br>
+                                    <br>
+                                    <br>
+                                    <br>
+                                    <br><br>
+                                    <br>
+                                    <br>
+                                    <br>
+                                    <br>
+                                    <br>
+                                </div>
+                                <!--
+                            <div id="globalFeed" class="feeds">
+                                <div class="PostCard">
+                                    <div class="postCard_Header">
+                                        <div class="postCard_Header_PP">
+                                            <img src="" alt="profilePicture">
+                                        </div>
+                                        <a href="" class="postCard_Header_PP"><span>User Profile name</span></a>
+                                    </div>
+                                    <div class="postCard_Image">
+                                        <img src="user.png" alt="postImage">
+                                    </div>
+                                    <div class="postCard_Footer">
+                                        <div id="Hashtage">
+                                            <p>hashtags</p>
+                                        </div>
+                                        <div id="Hashtage"></div>
+                                        <div id="comments">
+                                            <label>Add a comment</label>
+                                            <div id="showComments">
+                                                {Comments will display here}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                -->
+                            </div>
+                        </div>
+        ';
+        }else{
+                echo "
 				
 					<nav>	
 						<ul class='row'>
@@ -248,8 +302,8 @@ if (isset($_POST['upload'])) {
 						</form>
 					</div>
 				";
-		}
-	} else {
+            }
+        } else {
 		echo '
 			
 			<nav>	
@@ -268,9 +322,7 @@ if (isset($_POST['upload'])) {
 			</div>
 			';
 	}
-
-
-	?>
+        ?>
 
 </body>
 

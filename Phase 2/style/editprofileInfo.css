@@ -1,0 +1,77 @@
+html,
+body {
+    overflow-y: hidden;
+    /*    background-color:#a8dadc;*/
+    background-color: #9e0059;
+    color: white;
+}
+
+.container {
+    margin-top: 5%;
+}
+
+#topBox,
+#profilePicBox,
+#changePic {
+    height: 20vh;
+}
+
+#topBox {
+    width: 80%;
+    margin: 0 auto;
+}
+
+#profilePicBox img {
+    background-color: white;
+    height: 100%;
+    border-radius: 50%;
+    display: block;
+    margin: 0 auto;
+}
+
+table {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+table tr {
+    width: 100%;
+    display: inline-block;
+}
+
+tr td {
+    margin: 0 auto;
+}
+
+tr td:nth-child(odd) {
+    width: 15%;
+    display: inline-block;
+}
+
+tr td:nth-child(even) {
+    display: inline-block;
+    width: 25%;
+}
+
+.moveRight {
+    margin-left: 10%;
+}
+
+form:nth-child(2) {
+    margin-top: 5%;
+}
+
+form:nth-child(2) button {
+    display: block;
+    margin: 0 auto;
+}
+
+.btn {
+    margin-top: 4%;
+    background-color: #eee;
+    box-shadow: 0 0px 3px #333;
+}
+
+.btn:hover {
+    box-shadow: 0 0px 8px rgb(248, 246, 246);
+}

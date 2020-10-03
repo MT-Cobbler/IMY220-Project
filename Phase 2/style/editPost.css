@@ -1,0 +1,83 @@
+html,
+body,
+.container {
+    color: white;
+    background-color: #48cae4;
+}
+
+#post {
+    margin-left: 5%;
+}
+
+.PostCard {
+    width: 80%;
+    margin-left: 4%;
+    margin-top: 3%;
+    height: 600px;
+    display: inline-block;
+}
+
+.postCard_Header {
+    height: 11%;
+    padding: 2% 0;
+}
+
+.postCard_Header_PP {
+    float: left;
+    height: 100%;
+}
+
+.postCard_Header_PP:nth-child(1) {
+    width: 10%;
+}
+
+div.postCard_Header_PP img {
+    height: 100%;
+    border-radius: 50%;
+}
+
+.postCard_Image {
+    padding: 5%;
+    height: 80%;
+    background-color: white;
+}
+
+button {
+    margin-top: 4%;
+}
+
+.postCard_Footer {
+    height: 25%;
+    padding-left: 3%;
+}
+
+.postCard_Image img {
+    height: 100%;
+    width: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+#showComments {
+    width: 100%;
+    overflow-y: scroll;
+}
+
+.sideBoxes {
+    float: left;
+    width: 50%;
+}
+
+label {
+    width: 40%
+}
+
+input[type="text"] {
+    width: 60%;
+    margin-left: 5%;
+}
+
+#commentBox {
+    height: 20vh;
+    overflow-y: scroll;
+}
