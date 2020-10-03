@@ -223,12 +223,23 @@ elseif(isset($_POST['commentBtn'])){
                                                <form method="post" action="home.php">
                                                     <input type="hidden" name="email" value="'.$email.'">
                                                     <input type="hidden" name="userPass" value="'.$pass.'">
-                                                    <input type="hidden" name="picture" value="'.$rowTwo['picname'].'">
+                                                    <input type="hidden" name="picname" value="'.$rowTwo['picname'].'">
+                                                    <input type="hidden" name="uName" value="'.$rowTwo['username'].'">
                                                     <input type="text" name="picComment">
                                                     <button type="submit" name="commentBtn">Comment</button>
-                                               </form>
+                                               </form>';
+                                               $username = $rowTwo['username'];
+                                               $picname = $rowTwo['picname'];
+                                $comments = "SELECT * FROM image_comments WHERE username = '$username' AND picname = '$picname' ORDER BY time DESC";
+                                $comResult = $mysqli->query($comments);
+                                if($comResult->num_rows > 0){
+                                    while($rowThree = $comResult->fetch_assoc()){
+                                        echo '<p>"'.$rowThree['comment'].'"</p>';
+                                    }
+                                }
+
                                                
-                                            </div>
+                                        echo '    </div>
                                         </div>
                                     </div>';
                     }
