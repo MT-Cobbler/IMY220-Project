@@ -135,7 +135,7 @@ elseif(isset($_POST['deleteInfo'])){
                         </div>
                     </div>
                     <div id="bottomBox">
-                        <form action="editProfile.php" method="post">
+                        <form action="editprofile.php" method="post">
                             <table class="row">
                                 <tr class="col-12">
                                     <td>
