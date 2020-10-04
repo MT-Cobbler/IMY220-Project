@@ -1,16 +1,16 @@
 <?php
 
-//$server = "localhost";
-//$username = "u17029377";
-//$password = "mzjxkpgl";
-//$database = "dbu17029377";
-//$mysqli = mysqli_connect($server, $username, $password, $database);
-
 $server = "localhost";
-$username = "root";
-$password = "";
+$username = "u17029377";
+$password = "mzjxkpgl";
 $database = "dbu17029377";
 $mysqli = mysqli_connect($server, $username, $password, $database);
+
+// $server = "localhost";
+// $username = "root";
+// $password = "";
+// $database = "dbu17029377";
+// $mysqli = mysqli_connect($server, $username, $password, $database);
 
 $email = isset($_POST["email"]) ? $_POST["email"] : false;
 $pass = isset($_POST["userPass"]) ? $_POST["userPass"] : false;
@@ -18,8 +18,8 @@ $pass = isset($_POST["userPass"]) ? $_POST["userPass"] : false;
 
 if (isset($_POST['upload'])) {
 	/*----------------Upload multiple at a time------------*/
-
-	$targetFile = "gallery/";
+    echo 'hello';
+	$targetFile = "postGallery/";
 
 	$uploadFile = $_FILES['picToUpload'];
 	$numFiles = count($uploadFile['name']);
@@ -30,7 +30,7 @@ if (isset($_POST['upload'])) {
 	$uName = $_POST['UserName'];
 
 	for ($i = 0; $i < $numFiles; $i++) {
-
+     
 		$target = $targetFile . $uploadFile['name'][$i];
 		$imageType = strtolower(pathinfo($target, PATHINFO_EXTENSION));
 
@@ -40,18 +40,26 @@ if (isset($_POST['upload'])) {
 			
 			if ($uploadFile['error'][$i] > 0) {
 			} else {
-				
+			
 				if (move_uploaded_file($uploadFile['tmp_name'][$i], $target)) {
+                    $query ="INSERT INTO userimages (username, email, picname, hashtag, i_description) VALUES ('$uName','$userID','$image','$imageHash','$imageD')";
+                    if($mysqli->query($query) == TRUE){
+                      
+                    }
+                    else{
+                       
+                    }
+                    // $uploadImage = "INSERT INTO userimages(email, picname ,hashtag, i_description, username) VALUES ('".$userID."','$image','$imageHash','$imageD', '$uName')";
+                    // // $imageUploading = "INSERT INTO userimages (email, fname, hashtag, i_description, username) VALUES ('$userID','$image', '$imageHash', '$imageD', '$userName')";
+                    // if ($mysqli->query($uploadImage) === TRUE) {
+                    //     echo 'hello';
+                    // } else {
+                    //     //echo $image;
+                    // }
 				} else {
 					echo "could not upload";
 				}
-				$uploadImage = "INSERT INTO userimages(email, picname ,hashtag, i_description, username) VALUES ('$userID','$image','$imageHash','$imageD', '$uName')";
-				// $imageUploading = "INSERT INTO userimages (email, fname, hashtag, i_description, username) VALUES ('$userID','$image', '$imageHash', '$imageD', '$userName')";
-				if ($mysqli->query($uploadImage) === TRUE) {
-					
-				} else {
-					//echo $image;
-				}
+				
 			}
 		}
 	}
@@ -105,7 +113,7 @@ elseif(isset($_POST['commentBtn'])){
     <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
     <meta name="theme-color" content="#000000">
     <link rel="stylesheet" type="text/css" href="style/style.css">
-    <link rel="stylesheet" href="style/homestyle.css" type="text/css">
+    <link rel="stylesheet" href="style/home.css" type="text/css">
 
     <style>
 
@@ -208,7 +216,7 @@ elseif(isset($_POST['commentBtn'])){
 
                                         </div>
                                         <div class="postCard_Image">
-                                            <img src="gallery/' . $rowTwo['picname'] . '" alt="postImage">
+                                            <img src="postGallery/' . $rowTwo['picname'] . '" alt="postImage">
                                         </div>
                                         <div class="postCard_Footer" style="height: 25%; padding-left: 3%;background-color: #9e0059;">
                                             <div id="Hashtage">
@@ -226,8 +234,8 @@ elseif(isset($_POST['commentBtn'])){
                                                     <input type="hidden" name="userPass" value="'.$pass.'">
                                                     <input type="hidden" name="picname" value="'.$rowTwo['picname'].'">
                                                     <input type="hidden" name="uName" value="'.$rowTwo['username'].'">
-                                                    <input type="text" name="picComment">
-                                                    <button type="submit" name="commentBtn">Comment</button>
+                                                    <input type="text" name="picComment" placeholder="Write a comment">
+                                                    <button type="submit" name="commentBtn" id="commentBtn">Comment</button>
                                                </form>';
                                                $username = $rowTwo['username'];
                                                $picname = $rowTwo['picname'];

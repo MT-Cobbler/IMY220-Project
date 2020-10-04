@@ -1,25 +1,24 @@
 <?php
 
-//$server = "localhost";
-//$username = "u17029377";
-//$password = "mzjxkpgl";
-//$database = "dbu17029377";
-//$mysqli = mysqli_connect($server, $username, $password, $database);
-
 $server = "localhost";
-$username = "root";
-$password = "";
+$username = "u17029377";
+$password = "mzjxkpgl";
 $database = "dbu17029377";
 $mysqli = mysqli_connect($server, $username, $password, $database);
+
+// $server = "localhost";
+// $username = "root";
+// $password = "";
+// $database = "dbu17029377";
+// $mysqli = mysqli_connect($server, $username, $password, $database);
 
 $email = isset($_POST["email"]) ? $_POST["email"] : false;
 $pass = isset($_POST["userPass"]) ? $_POST["userPass"] : false;
 
-
 if (isset($_POST['upload'])) {
 	/*----------------Upload multiple at a time------------*/
 
-	$targetFile = "gallery/";
+	$targetFile = "postGallery/";
 
 	$uploadFile = $_FILES['picToUpload'];
 	$numFiles = count($uploadFile['name']);
@@ -173,7 +172,7 @@ else if(isset($_POST['commentBtn'])){
                         <div id="info" class="innerContents">
                             <div id="upperInfo">
                                 <h3>'.$row['username'].'</h3>
-                                <form method="post" action="editProfile.php">
+                                <form method="post" action="editprofile.php">
                                     <span style="color:#333;">'.$email.'       ->Click on the right to edit info </span>
                                     <input type="hidden" name="email" value="'.$email.'">
                                     <input type="hidden" name="userPass" value="'.$pass.'">
@@ -217,7 +216,7 @@ else if(isset($_POST['commentBtn'])){
         
                             </div>
                             <div class="postCard_Image">
-                                <img src="gallery/' . $rowTwo['picname'] . '" alt="postImage">
+                                <img src="postGallery/' . $rowTwo['picname'] . '" alt="postImage">
                                 
                             </div>
                             <div class="postCard_Footer">

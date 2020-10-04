@@ -1,16 +1,16 @@
 <?php
 
-//$server = "localhost";
-//$username = "u17029377";
-//$password = "mzjxkpgl";
-//$database = "dbu17029377";
-//$mysqli = mysqli_connect($server, $username, $password, $database);
-
 $server = "localhost";
-$username = "root";
-$password = "";
+$username = "u17029377";
+$password = "mzjxkpgl";
 $database = "dbu17029377";
 $mysqli = mysqli_connect($server, $username, $password, $database);
+
+// $server = "localhost";
+// $username = "root";
+// $password = "";
+// $database = "dbu17029377";
+// $mysqli = mysqli_connect($server, $username, $password, $database);
 
 $email = isset($_POST["email"]) ? $_POST["email"] : false;
 $pass = isset($_POST["userPass"]) ? $_POST["userPass"] : false;
@@ -60,9 +60,9 @@ elseif(isset($_POST['deleteInfo'])){
     $dPword = $_POST['userPass'];
     $dEmail = $_POST['email'];
     $dUsername = $_POST['username'];
-    $deleteUser = (mysqli_query($mysqli, "DELETE FROM usertable WHERE email = '$dEmail' AND pword = '$dPword' AND fname= '$dFname' AND lname = '$dLname' AND username ='$dUsername'"));
-    $deleteImages = (mysqli_query($mysqli, "DELETE FROM userimages WHERE email = '$dEmail' AND username ='$dUsername'"));
-    $deleteComments = (mysqli_query($mysqli, "DELETE FROM image_comments WHERE username ='$dUsername'"));
+    $deleteUser = (mysqli_query($mysqli, "DELETE FROM usertable WHERE email = '$dEmail' AND pword = '$dPword' AND fname= '$dFname' AND lname = '$dLname' AND username ='$dUsername' "));
+    // $deleteImages = (mysqli_query($mysqli, "DELETE FROM userimages WHERE email = '$dEmail' AND username ='$dUsername'"));
+    // $deleteComments = (mysqli_query($mysqli, "DELETE FROM image_comments WHERE username ='$dUsername'"));
 }
 
 ?>
@@ -175,7 +175,7 @@ elseif(isset($_POST['deleteInfo'])){
                             <button class="btn" name="updateInfoBtn" type="submit">Update Info</button>
                         </form>
                         <div>
-                           <form action="editProfile.php" method="post">
+                           <form action="editprofile.php" method="post">
                                 <input type="hidden" name="email" value="'.$email.'">
                                 <input type="hidden" name="userPass" value="'.$pass.'">
                                 <input type="hidden" name="fname" value="'.$row['fname'].'">

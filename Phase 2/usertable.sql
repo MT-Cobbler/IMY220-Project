@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.5
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Sep 11, 2020 at 08:07 AM
--- Server version: 5.7.31-0ubuntu0.18.04.1
--- PHP Version: 7.2.24-0ubuntu0.18.04.6
+-- Host: 127.0.0.1
+-- Generation Time: Oct 03, 2020 at 03:36 PM
+-- Server version: 10.4.13-MariaDB
+-- PHP Version: 7.2.32
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -34,19 +33,17 @@ CREATE TABLE `usertable` (
   `pword` char(100) NOT NULL,
   `email` char(100) NOT NULL,
   `username` varchar(100) NOT NULL,
-  `user_id` int(11) NOT NULL
+  `user_id` int(11) NOT NULL,
+  `profilepic` varchar(150) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `usertable`
 --
 
-INSERT INTO `usertable` (`fname`, `lname`, `pword`, `email`, `username`, `user_id`) VALUES
-('Matthew', 'Schoeman', 'Pancakes#1', 'matsch@gmail.com', 'MTSchoeman', 1),
-('Steve', 'Hoffen', 'Hartenbos', 'shoffen@gmail.com', 'SHoffen', 2),
-('Erin', 'McGladdery', 'ErinBerin', 'emcgladdery@gmail.com', 'EMcG', 3),
-('Admin', 'Admin', 'Admin', 'admin@gmail.com', 'Admin', 4),
-('Noreen', 'Schoeman', 'Password#1', 'nschoeman@gmail.com', 'Nschoeman', 5);
+INSERT INTO `usertable` (`fname`, `lname`, `pword`, `email`, `username`, `user_id`, `profilepic`) VALUES
+('Matthew', 'Schoeman', 'Pancakes#1', 'matsch@gmail.com', 'MTSchoeman', 1, 'logo6.png'),
+('Stephan', 'Hoffen', 'Hartenbos', 'shoffen@gmail.com', 'SHoffen', 2, '');
 
 --
 -- Indexes for dumped tables
@@ -66,7 +63,7 @@ ALTER TABLE `usertable`
 -- AUTO_INCREMENT for table `usertable`
 --
 ALTER TABLE `usertable`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

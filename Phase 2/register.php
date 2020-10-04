@@ -2,18 +2,17 @@
 // See all errors and warnings
 error_reporting(E_ALL);
 ini_set('error_reporting', E_ALL);
-
-//$server = "localhost";
-//$username = "u17029377";
-//$password = "mzjxkpgl";
-//$database = "dbu17029377";
-//$mysqli = mysqli_connect($server, $username, $password, $database);
-
 $server = "localhost";
-$username = "root";
-$password = "";
+$username = "u17029377";
+$password = "mzjxkpgl";
 $database = "dbu17029377";
 $mysqli = mysqli_connect($server, $username, $password, $database);
+
+// $server = "localhost";
+// $username = "root";
+// $password = "";
+// $database = "dbu17029377";
+// $mysqli = mysqli_connect($server, $username, $password, $database);
 
 if($mysqli){
 	$fname = $_POST['fname'];
@@ -21,8 +20,8 @@ if($mysqli){
 	$uname = $_POST['userName'];
 	$pword = $_POST['userPass'];
 	$email = $_POST['email'];
-
-	$query = "INSERT INTO usertable (fname, lname, pword, email, username)	VALUES ('$fname','$lname','$pword','$email', '$uname')";
+	echo $fname,$lname,$uname,$pword,$email,$email;
+	$query = "INSERT INTO usertable (fname, lname, pword, email, username, profilepic)	VALUES ('$fname','$lname','$pword','$email', '$uname', '')";
 	
 
 	$res = mysqli_query($mysqli, $query) == TRUE;

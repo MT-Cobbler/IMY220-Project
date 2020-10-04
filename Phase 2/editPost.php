@@ -1,16 +1,16 @@
 <?php
 
-//$server = "localhost";
-//$username = "u17029377";
-//$password = "mzjxkpgl";
-//$database = "dbu17029377";
-//$mysqli = mysqli_connect($server, $username, $password, $database);
-
 $server = "localhost";
-$username = "root";
-$password = "";
+$username = "u17029377";
+$password = "mzjxkpgl";
 $database = "dbu17029377";
 $mysqli = mysqli_connect($server, $username, $password, $database);
+
+// $server = "localhost";
+// $username = "root";
+// $password = "";
+// $database = "dbu17029377";
+// $mysqli = mysqli_connect($server, $username, $password, $database);
 
 $email = isset($_POST["email"]) ? $_POST["email"] : false;
 $pass = isset($_POST["userPass"]) ? $_POST["userPass"] : false;
@@ -30,16 +30,22 @@ else if(isset($_POST['delete'])){
     $email = $_POST['dEmail'];
     $picToDelete = $_POST['dPic'];
     $datePosted = $_POST['dDate'];
-    $deletePict = "DELETE FROM userimages WHERE picname='$picToDelete' AND username='$username' AND email='$email'";
-    if(mysqli_query($mysqli, $deletePict)){
-        echo "Record successfully deleted";
+    $dHash = $_POST['dHash'];
+    $description = $_POST['i_description'];
+    echo $username.$email,$picToDelete,$datePosted,$description,$dHash;
+    $deletePict = "DELETE FROM userimages WHERE picname='$picToDelete' AND date='$datePosted' AND username='$username'";
+
+    // $deletePict = "DELETE FROM userimages WHERE picname='$picToDelete' AND date='$datePosted' AND username='$username' AND email='$email' AND i_description = '$description' hashtag ='$dHash'";
+    if($mysqli->query($deletePict) === TRUE){
         $deleted = true;
     }
     else{
         $deleted = false;
+        
     }
-
 }
+
+
 ?>
 
 <!DOCTYPE html>
@@ -95,7 +101,7 @@ else if(isset($_POST['delete'])){
                                     <div class="PostCard">
                                        
                                         <div class="postCard_Image">
-                                            <img src="gallery/' . $row['picname'] . '" alt="postImage">
+                                            <img src="postGallery/' . $row['picname'] . '" alt="postImage">
                                         </div>
                                        
                                     </div>
@@ -139,20 +145,22 @@ else if(isset($_POST['delete'])){
                                         <button type="submit" name="save" class="btn btn-danger">Save</button>
                                     </form>
                                     <form method="post" action="editPost.php">
-                                        <input type="hidden" value="username" name="dUsername">
+                                        <input type="hidden" value="'.$username.'" name="dUsername">
                                         <input type="hidden" value="'.$email.'" name="dEmail">
                                         <input type="hidden" value="'.$picname.'" name="dPic">
                                         <input type="hidden" value="'.$row['date'].'" name="dDate">
+                                        <input type="hidden" value="'.$row['hashtag'].'" name="dHash">
+                                        <input type="hidden" value="'.$row['i_description'].'" name="dDescription">
                                         <input type="hidden" value="'.$email.'" name="email">
                                         <input type="hidden" value="'.$pass.'" name="userPass">
                                         <input type="hidden" value="'.$picname.'" name="picname">
                                         <button type="submit" name="delete" class="btn btn-warning">Delete Post</button>
                                     </form>
                                     <form method="post" action="profile.php">
-                                    <input type="hidden" name="email" value="'.$email.'">
-                                    <input type="hidden" name="userPass" value="'.$pass.'">
-                                    <button type="submit" class="btn btn-light">Go Back</button>
-                                </form>
+                                        <input type="hidden" name="email" value="'.$email.'">
+                                        <input type="hidden" name="userPass" value="'.$pass.'">
+                                        <button type="submit" class="btn btn-light">Go Back</button>
+                                    </form>
                                 </div>
                                
                             </div>
@@ -165,8 +173,20 @@ else if(isset($_POST['delete'])){
             }
         }
         else{
-            echo 'bruu';
-        }
+            echo "<nav>	
+            <ul class='row'>
+                <div class='container' style='text-align:center'>
+                    <h1>You have deleted the post</h1>
+                </div>
+                
+            </ul>
+        </nav>
+        <form method='POST' action='profile.php'>
+            <input type='hidden' name='email' value='".$email."'/>
+            <input type='hidden' name='userPass' value='".$pass."'/>
+            <button type='submit' class='btn btn-light' style='margin:2% 40%; width: 20%'>Go Back</button>
+        </form>";
+        };
         
     ?>
    

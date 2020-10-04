@@ -1,16 +1,16 @@
 <?php
 
-//$server = "localhost";
-//$username = "u17029377";
-//$password = "mzjxkpgl";
-//$database = "dbu17029377";
-//$mysqli = mysqli_connect($server, $username, $password, $database);
-
 $server = "localhost";
-$username = "root";
-$password = "";
+$username = "u17029377";
+$password = "mzjxkpgl";
 $database = "dbu17029377";
 $mysqli = mysqli_connect($server, $username, $password, $database);
+
+// $server = "localhost";
+// $username = "root";
+// $password = "";
+// $database = "dbu17029377";
+// $mysqli = mysqli_connect($server, $username, $password, $database);
 
 $email = isset($_POST["email"]) ? $_POST["email"] : false;
 $pass = isset($_POST["userPass"]) ? $_POST["userPass"] : false;
@@ -112,7 +112,7 @@ $deleted = false;
     
                                             </div>
                                             <div class="postCard_Image">
-                                                <img src="gallery/' . $rowTwo['picname'] . '" alt="postImage">
+                                                <img src="postGallery/' . $rowTwo['picname'] . '" alt="postImage">
                                                     </div>
                                                     <div class="postCard_Footer" style="height: 25%;
                                                     padding-left: 3%;
