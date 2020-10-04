@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Sep 11, 2020 at 08:02 AM
+-- Generation Time: Oct 04, 2020 at 02:08 PM
 -- Server version: 5.7.31-0ubuntu0.18.04.1
 -- PHP Version: 7.2.24-0ubuntu0.18.04.6
 
@@ -25,6 +25,29 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `image_comments`
+--
+
+CREATE TABLE `image_comments` (
+  `username` varchar(100) NOT NULL,
+  `picname` varchar(100) NOT NULL,
+  `comment` text NOT NULL,
+  `id` int(11) NOT NULL,
+  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `image_comments`
+--
+
+INSERT INTO `image_comments` (`username`, `picname`, `comment`, `id`, `time`) VALUES
+('MTSchoeman', 'img_parallax.jpg', '', 33, '2020-10-03 13:17:58'),
+('MTSchoeman', 'img_parallax2.jpg', 'Must have been cold', 34, '2020-10-03 13:23:42'),
+('MTSchoeman', 'img_parallax3.jpg', 'That looks unreal O_O', 35, '2020-10-04 14:02:51');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `userimages`
 --
 
@@ -33,10 +56,8 @@ CREATE TABLE `userimages` (
   `email` varchar(100) NOT NULL,
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `picname` varchar(50) NOT NULL,
-  `imagename` varchar(150) NOT NULL,
   `hashtag` varchar(100) NOT NULL,
   `i_description` char(100) NOT NULL,
-  `profilepic` varchar(100) NOT NULL,
   `username` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -44,12 +65,12 @@ CREATE TABLE `userimages` (
 -- Dumping data for table `userimages`
 --
 
-INSERT INTO `userimages` (`image_id`, `email`, `date`, `picname`, `imagename`, `hashtag`, `i_description`, `profilepic`, `username`) VALUES
-(1, 'matsch@gmail.com', '2020-09-09 14:45:33', 'img_parallax.jpg', '', '#cool', 'Caught this on my trip', '', 'MTSchoeman'),
-(2, 'matsch@gmail.com', '2020-09-09 14:49:16', 'img_parallax2.jpg', '', '#lucky', 'Accidentally stumbled here', '', 'MTSchoeman'),
-(3, 'matsch@gmail.com', '2020-09-09 14:52:00', 'img_parallax3.jpg', '', '#whoops', 'I need to stop getting lost', '', 'MTSchoeman'),
-(4, 'shoffen@gmail.com', '2020-09-09 16:55:35', 'ht1.jfif', '', '#Vakansie', 'Hartenbos, hier kom ek', '', 'SHoffen'),
-(5, 'shoffen@gmail.com', '2020-09-09 16:55:35', 'hartenboz.jfif', '', '#Strand', 'Lekker sonskuin', '', 'SHoffen');
+INSERT INTO `userimages` (`image_id`, `email`, `date`, `picname`, `hashtag`, `i_description`, `username`) VALUES
+(4, 'shoffen@gmail.com', '2020-09-09 16:55:35', 'ht1.jfif', '#Vakansie', 'Hartenbos, hier kom ek', 'SHoffen'),
+(5, 'shoffen@gmail.com', '2020-09-09 16:55:35', 'hartenboz.jfif', '#Strand', 'Lekker sonskuin', 'SHoffen'),
+(170, 'matsch@gmail.com', '2020-10-04 13:17:00', 'road.jpg', '#driving', 'Long drive home :(', 'MTSchoeman'),
+(171, 'matsch@gmail.com', '2020-10-04 13:59:11', 'img_parallax4.jpg', '#FarmLife', 'Going for a morning walk', 'MTSchoeman'),
+(172, 'matsch@gmail.com', '2020-10-04 14:01:55', 'img_parallax3.jpg', '#3D', 'My new render', 'MTSchoeman');
 
 -- --------------------------------------------------------
 
@@ -63,23 +84,27 @@ CREATE TABLE `usertable` (
   `pword` char(100) NOT NULL,
   `email` char(100) NOT NULL,
   `username` varchar(100) NOT NULL,
-  `user_id` int(11) NOT NULL
+  `user_id` int(11) NOT NULL,
+  `profilepic` varchar(150) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `usertable`
 --
 
-INSERT INTO `usertable` (`fname`, `lname`, `pword`, `email`, `username`, `user_id`) VALUES
-('Matthew', 'Schoeman', 'Pancakes#1', 'matsch@gmail.com', 'MTSchoeman', 1),
-('Steve', 'Hoffen', 'Hartenbos', 'shoffen@gmail.com', 'SHoffen', 2),
-('Erin', 'McGladdery', 'ErinBerin', 'emcgladdery@gmail.com', 'EMcG', 3),
-('Admin', 'Admin', 'Admin', 'admin@gmail.com', 'Admin', 4),
-('Noreen', 'Schoeman', 'Password#1', 'nschoeman@gmail.com', 'Nschoeman', 5);
+INSERT INTO `usertable` (`fname`, `lname`, `pword`, `email`, `username`, `user_id`, `profilepic`) VALUES
+('Matthew', 'Schoeman', 'Pancakes#1', 'matsch@gmail.com', 'MTSchoeman', 1, 'logo6.png'),
+('Stephan', 'Hoffen', 'Hartenbos', 'shoffen@gmail.com', 'SHoffen', 2, 'game_icon.png');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `image_comments`
+--
+ALTER TABLE `image_comments`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `userimages`
@@ -98,16 +123,22 @@ ALTER TABLE `usertable`
 --
 
 --
+-- AUTO_INCREMENT for table `image_comments`
+--
+ALTER TABLE `image_comments`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+
+--
 -- AUTO_INCREMENT for table `userimages`
 --
 ALTER TABLE `userimages`
-  MODIFY `image_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=143;
+  MODIFY `image_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=173;
 
 --
 -- AUTO_INCREMENT for table `usertable`
 --
 ALTER TABLE `usertable`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

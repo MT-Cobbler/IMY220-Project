@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.2
+-- version 4.9.5
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Oct 03, 2020 at 03:36 PM
--- Server version: 10.4.13-MariaDB
--- PHP Version: 7.2.32
+-- Host: localhost
+-- Generation Time: Oct 04, 2020 at 02:05 PM
+-- Server version: 5.7.31-0ubuntu0.18.04.1
+-- PHP Version: 7.2.24-0ubuntu0.18.04.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -43,7 +44,7 @@ CREATE TABLE `usertable` (
 
 INSERT INTO `usertable` (`fname`, `lname`, `pword`, `email`, `username`, `user_id`, `profilepic`) VALUES
 ('Matthew', 'Schoeman', 'Pancakes#1', 'matsch@gmail.com', 'MTSchoeman', 1, 'logo6.png'),
-('Stephan', 'Hoffen', 'Hartenbos', 'shoffen@gmail.com', 'SHoffen', 2, '');
+('Stephan', 'Hoffen', 'Hartenbos', 'shoffen@gmail.com', 'SHoffen', 2, 'game_icon.png');
 
 --
 -- Indexes for dumped tables
@@ -63,7 +64,7 @@ ALTER TABLE `usertable`
 -- AUTO_INCREMENT for table `usertable`
 --
 ALTER TABLE `usertable`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

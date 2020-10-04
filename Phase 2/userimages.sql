@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.2
+-- version 4.9.5
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Oct 04, 2020 at 09:53 AM
--- Server version: 10.4.13-MariaDB
--- PHP Version: 7.2.32
+-- Host: localhost
+-- Generation Time: Oct 04, 2020 at 02:06 PM
+-- Server version: 5.7.31-0ubuntu0.18.04.1
+-- PHP Version: 7.2.24-0ubuntu0.18.04.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -30,12 +31,10 @@ SET time_zone = "+00:00";
 CREATE TABLE `userimages` (
   `image_id` int(11) NOT NULL,
   `email` varchar(100) NOT NULL,
-  `date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `picname` varchar(50) NOT NULL,
-  `imagename` varchar(150) NOT NULL,
   `hashtag` varchar(100) NOT NULL,
   `i_description` char(100) NOT NULL,
-  `album` varchar(100) NOT NULL,
   `username` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -43,11 +42,12 @@ CREATE TABLE `userimages` (
 -- Dumping data for table `userimages`
 --
 
-INSERT INTO `userimages` (`image_id`, `email`, `date`, `picname`, `imagename`, `hashtag`, `i_description`, `album`, `username`) VALUES
-(1, 'matsch@gmail.com', '2020-09-09 14:45:33', 'img_parallax.jpg', '', '#cool', 'Caught this on my trip', '', 'MTSchoeman'),
-(2, 'matsch@gmail.com', '2020-09-09 14:49:16', 'img_parallax2.jpg', '', '#lucky', 'Accidentally stumbled here', '', 'MTSchoeman'),
-(4, 'shoffen@gmail.com', '2020-09-09 16:55:35', 'ht1.jfif', '', '#Vakansie', 'Hartenbos, hier kom ek', '', 'SHoffen'),
-(5, 'shoffen@gmail.com', '2020-09-09 16:55:35', 'hartenboz.jfif', '', '#Strand', 'Lekker sonskuin', '', 'SHoffen');
+INSERT INTO `userimages` (`image_id`, `email`, `date`, `picname`, `hashtag`, `i_description`, `username`) VALUES
+(4, 'shoffen@gmail.com', '2020-09-09 16:55:35', 'ht1.jfif', '#Vakansie', 'Hartenbos, hier kom ek', 'SHoffen'),
+(5, 'shoffen@gmail.com', '2020-09-09 16:55:35', 'hartenboz.jfif', '#Strand', 'Lekker sonskuin', 'SHoffen'),
+(170, 'matsch@gmail.com', '2020-10-04 13:17:00', 'road.jpg', '#driving', 'Long drive home :(', 'MTSchoeman'),
+(171, 'matsch@gmail.com', '2020-10-04 13:59:11', 'img_parallax4.jpg', '#FarmLife', 'Going for a morning walk', 'MTSchoeman'),
+(172, 'matsch@gmail.com', '2020-10-04 14:01:55', 'img_parallax3.jpg', '#3D', 'My new render', 'MTSchoeman');
 
 --
 -- Indexes for dumped tables
@@ -67,7 +67,7 @@ ALTER TABLE `userimages`
 -- AUTO_INCREMENT for table `userimages`
 --
 ALTER TABLE `userimages`
-  MODIFY `image_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=161;
+  MODIFY `image_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=173;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
