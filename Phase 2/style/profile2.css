@@ -6,34 +6,70 @@ body {
     color: #333;
 }
 
-ul {
-    list-style-type: none;
+div#navigation {
+    height: 100px;
+    padding-top: 10px;
+    background-color: #091D42;
 }
 
-ul li {
+button.btn.btn-primary.mt-3.active {
+    font-size: 18px;
+    background-color: rgb(255, 255, 255);
+    color: black;
+    box-shadow: 5px 7px 5px #ffffff35;
+}
+
+#navigation>.container {
+    display: inline-block;
     float: left;
 }
 
-ul a li {
-    text-align: center;
-    margin: auto 8.5%;
+ul li {
+    list-style-type: none;
+    height: 100%;
 }
 
-li:nth-child(0) {
-    margin-left: 25%;
+ul li form {
+    display: inline-block;
+    float: left;
+    height: 100%;
+    margin: 0 auto;
 }
 
-li form button {
-    text-align: center;
-    margin-left: 4%;
+div.navBarImage form button {
+    background-color: none;
+    display: inline-block;
+    float: left;
+    width: 20%;
+    height: 80px;
+    border: 1px solid black;
+}
+
+div.navBarImage form button img {
+    height: 100%;
+    margin-left: 30%;
+}
+
+li.col-3 form button {
     border: none;
-    color: white;
-    background-color: rgba(255, 255, 255, .0);
-    transition: 150ms;
+    font-size: 18px;
+    box-shadow: 0 5px 15px rgba(238, 238, 238, 0);
+    background-color: #9e0059;
+    transition: all 0.s;
 }
 
-li form button:hover {
-    color: #9e0059;
+li.col-3 form button:hover {
+    font-size: 18px;
+    background-color: rgb(255, 255, 255);
+    color: black;
+    box-shadow: 5px 7px 5px #ffffff35;
+}
+
+button.btn.btn-primary.mt-3.active {
+    font-size: 18px;
+    background-color: rgb(255, 255, 255);
+    color: black;
+    box-shadow: 5px 7px 5px #ffffff35;
 }
 
 .active {
@@ -105,6 +141,7 @@ li form button:hover {
     box-shadow: 0px 0px 15px #333;
     transition: 200ms;
     overflow-y: none;
+    border-radius: 15px;
 }
 
 .PostCard:hover {
@@ -177,6 +214,7 @@ div#showComment {
     background-color: #9e0059;
     transition: 200ms;
     color: #eee;
+    border-radius: 15px;
 }
 
 .album button {
@@ -236,24 +274,6 @@ div#lowerInfo>button:hover {
 
 .container {
     margin-bottom: 1%;
-}
-
-#navigation {
-    width: 100%;
-    border: 1px solid black;
-    height: 8vh;
-    background-color: #03045e;
-    color: white;
-    margin-bottom: 1%;
-}
-
-#navigation .container ul a {
-    color: white;
-    transition: 100ms;
-}
-
-#navigation .container ul a:hover {
-    color: #9e0059;
 }
 
 #UploadImage form input {

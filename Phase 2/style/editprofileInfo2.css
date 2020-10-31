@@ -7,7 +7,8 @@ body {
 }
 
 .container {
-    margin-top: 5%;
+    background-color: #091D42;
+    padding: 1%;
 }
 
 #topBox,
@@ -19,6 +20,9 @@ body {
 #topBox {
     width: 80%;
     margin: 0 auto;
+    margin-bottom: 5%;
+    padding: 2%;
+    color: #fff;
 }
 
 #profilePicBox img {
@@ -27,30 +31,6 @@ body {
     border-radius: 50%;
     display: block;
     margin: 0 auto;
-}
-
-table {
-    margin-left: auto;
-    margin-right: auto;
-}
-
-table tr {
-    width: 100%;
-    display: inline-block;
-}
-
-tr td {
-    margin: 0 auto;
-}
-
-tr td:nth-child(odd) {
-    width: 15%;
-    display: inline-block;
-}
-
-tr td:nth-child(even) {
-    display: inline-block;
-    width: 25%;
 }
 
 .moveRight {
@@ -74,4 +54,13 @@ form:nth-child(2) button {
 
 .btn:hover {
     box-shadow: 0 0px 8px rgb(248, 246, 246);
+}
+
+div.col-5.details label {
+    color: #9e0059;
+    font-size: 1.5em;
+}
+
+div.col-5.details span {
+    font-size: 1.5em;
 }

@@ -1,16 +1,16 @@
 <?php
 
-$server = "localhost";
-$username = "u17029377";
-$password = "mzjxkpgl";
-$database = "dbu17029377";
-$mysqli = mysqli_connect($server, $username, $password, $database);
-
 // $server = "localhost";
-// $username = "root";
-// $password = "";
+// $username = "u17029377";
+// $password = "mzjxkpgl";
 // $database = "dbu17029377";
 // $mysqli = mysqli_connect($server, $username, $password, $database);
+
+$server = "localhost";
+$username = "root";
+$password = "";
+$database = "dbu17029377";
+$mysqli = mysqli_connect($server, $username, $password, $database);
 
 $email = isset($_POST["email"]) ? $_POST["email"] : false;
 $pass = isset($_POST["userPass"]) ? $_POST["userPass"] : false;
@@ -102,7 +102,10 @@ else if(isset($_POST['commentBtn'])){
     <meta name="msapplication-TileColor" content="#000000">
     <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
     <meta name="theme-color" content="#000000">
-    <link href="style/profile.css" rel="stylesheet" type="text/css">
+    <link href="style/profile2.css" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="script/navScript.js" charset="utf-8"></script>
+
 </head>
 
 <body id="homeContainer">
@@ -110,6 +113,8 @@ else if(isset($_POST['commentBtn'])){
     <?php
 
 		if($email && $pass){
+            session_start();
+            $_SESSION['email'] = $email;
 			$getID = "SELECT email FROM usertable WHERE email = '$email'";
 			$result = $mysqli->query($getID);
 			$sResult = mysqli_fetch_array($result);
@@ -119,25 +124,39 @@ else if(isset($_POST['commentBtn'])){
 			$res = $mysqli->query($query);
 			if($row = mysqli_fetch_array($res)){
                 echo '
-                <div id="navigation">
-                        <div class="container">
-                        <ul>
-                            <li><form action="home.php" method="post">
-                                <input type="hidden" value="'.$email.'" name="email">
-                                <input type="hidden" value="'.$pass.'" name="userPass">
-                                <button type="submit">Home</button>
-                            </form></li>
-                            <a href="#">
-                                <li class="active">Profile</li>
-                            </a>
-                            <a href="index.html">
-                                <li>Log Out</li>
-                            </a>
-                            <a>
-                                <li>'. $row['username'].'</li>
-                            </a>
-                        </ul>
-                    </div>
+                <div id="navigation" sytle="background-color: green">
+                <div class="navBarImage">
+                    <form class="" action="home.php" method="post">
+                        <input type="hidden" name="email" value="'.$email.'">
+                        <input type="hidden" name="userPass" value="'.$pass.'">
+                        <button class="btn" type="submit" name="button" style="border:none"><img src="media/logo6.png" /></button>
+                    </form>
+                </div>
+                <div class="container">
+
+                    <ul class="row">
+                        <li class="col-3">
+                            <form action="home.php" method="post">
+                                <input type="hidden" name="email" value="'.$email.'">
+                                <input type="hidden" name="userPass" value="'.$pass.'">
+                                <button class="btn btn-primary mt-3" type="submit" name="button">Home</button>
+                            </form>
+                        </li>
+                        <li class="col-3">
+                            <form action="profile.php" method="post">
+                                <input type="hidden" name="email" value="'.$email.'">
+                                <input type="hidden" name="userPass" value="'.$pass.'">
+                                <button class="btn btn-primary mt-3 active" type="submit">Profile</button>
+                            </form>
+                        </li>
+                        <li class="col-3">
+                            <form action="index.html" method="post">
+                                <button class="btn btn-primary mt-3" type="submit">Log Out</button>
+                            </form>
+                        </li>
+                        <li class="col-3 pt-3"> '.$row['username'].'</li>
+                    </ul>
+                </div>
             </div>
             <br>
             <br>

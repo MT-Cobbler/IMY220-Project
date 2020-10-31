@@ -6,49 +6,6 @@ body {
     color: rgb(119, 17, 17);
 }
 
-ul {
-    list-style-type: none;
-}
-
-ul li {
-    float: left;
-}
-
-ul a li {
-    text-align: center;
-    margin: auto 8.5%;
-}
-
-li form button {
-    text-align: center;
-    border: none;
-    color: white;
-    background-color: rgba(255, 255, 255, .0);
-    transition: 150ms;
-}
-
-li form button:hover {
-    color: #9e0059;
-}
-
-#navigation {
-    width: 100%;
-    border: 1px solid black;
-    height: 8vh;
-    background-color: #03045e;
-    color: white;
-    margin-bottom: 1%;
-}
-
-#navigation .container ul a {
-    color: white;
-    transition: 100ms;
-}
-
-#navigation .container ul a:hover {
-    color: #9e0059;
-}
-
 .active {
     text-decoration: line-through;
 }
@@ -86,13 +43,32 @@ li form button:hover {
     color: white;
     box-shadow: 0px 0px 15px #333;
     transition: 200ms;
+    border-radius: 15px;
 }
 
 #globalFeed {
     width: 0;
 }
 
+#golbalFeed {
+    overflow-y: scroll;
+    width: 100%;
+    padding-left: 2%;
+    height: 100vh;
+    border: 1px solid #03045e;
+    background-color: #48cae4;
+}
+
 #personalFeed {
+    overflow-y: scroll;
+    width: 100%;
+    padding-left: 2%;
+    height: 100vh;
+    border: 1px solid #03045e;
+    background-color: #48cae4;
+}
+
+.feeds {
     overflow-y: scroll;
     width: 100%;
     padding-left: 2%;
@@ -132,7 +108,6 @@ li form button:hover {
 
 div.postCard_Header_PP img {
     height: 100%;
-    border-radius: 50%;
 }
 
 .postCard_Image {

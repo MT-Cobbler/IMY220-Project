@@ -1,16 +1,16 @@
 <?php
 
-$server = "localhost";
-$username = "u17029377";
-$password = "mzjxkpgl";
-$database = "dbu17029377";
-$mysqli = mysqli_connect($server, $username, $password, $database);
-
 // $server = "localhost";
-// $username = "root";
-// $password = "";
+// $username = "u17029377";
+// $password = "mzjxkpgl";
 // $database = "dbu17029377";
 // $mysqli = mysqli_connect($server, $username, $password, $database);
+
+$server = "localhost";
+$username = "root";
+$password = "";
+$database = "dbu17029377";
+$mysqli = mysqli_connect($server, $username, $password, $database);
 
 $email = isset($_POST["email"]) ? $_POST["email"] : false;
 $pass = isset($_POST["userPass"]) ? $_POST["userPass"] : false;
@@ -22,7 +22,6 @@ if(isset($_POST['save'])){
     
     $description = $_POST['i_description'];
     $hashtag = $_POST['i_hashtag'];
-
     $updateInfo = mysqli_query($mysqli,"UPDATE userimages SET i_description = '".$description."', hashtag = '".$hashtag."' WHERE email = '$email' AND pword = '$pass'");
 }
 else if(isset($_POST['delete'])){
